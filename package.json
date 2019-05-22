@@ -1,0 +1,22 @@
+{
+  "name": "nodepassportlogin",
+  "version": "1.0.0",
+  "description": "nodePassportLogin",
+  "main": "index.js",
+  "scripts": {
+    "test": "start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/github4mitlab/nodePassportLogin.git"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "maylee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/github4mitlab/nodePassportLogin/issues"
+  },
+  "homepage": "https://github.com/github4mitlab/nodePassportLogin#readme"
+}
