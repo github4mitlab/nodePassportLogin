@@ -5,8 +5,11 @@ router.get("/login", (req, res) => {
     res.render("Login");
 });
 
-router.get("/register", (req, res) => {
-    res.render("register");
+router.post("/register", (req, res) => {
+    //res.render("register");
+    console.log(req.body);
+    res.send("hi");
+    //res.render("register");
 });
 
 

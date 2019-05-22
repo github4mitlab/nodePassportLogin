@@ -14,6 +14,8 @@ mongoose.connect(db, { useNewUrlParser:true })
 app.use(expressLayouts);
 app.set("view engine", "ejs"); // 매뉴얼에 이렇게 하도록 미리 세팅이 되어 있음 암기
 
+// Express body parser
+app.use(express.urlencoded({ extended:true }));
 
 
 app.use("/", require("./routers/index"));
