@@ -1,30 +1,49 @@
-const localStategy = require("passport-local").Strategy;
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+const LocalStrategy = require('passport-local').Strategy;
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
-const userModel = require("../models/user");
+// Load User Model
+const User = require('../models/User');
 
 module.exports = function (passport) {
     passport.use(
-        new localStategy({usernameField: "email"}, (email, password, done) => {
-            userModel
-                .findOne({email: email})
-                .then( user => {
+        // new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
+        //     // Match User
+        //     User.findOne({ email: email })
+        //         .then(user => {
+        //             if(!user) {
+        //                 return done(null, false, { message: 'That email is not registered' });
+        //             }
+        //             // Match Password
+        //             bcrypt.compare(password, user.password, (err, isMatch) => {
+        //                 if(err) throw err;
+        //                 if(isMatch) {
+        //                     return done(null, user);
+        //                 } else {
+        //                     return done(null, false, { message: 'Password incorrect' });
+        //                 }
+        //             });
+        //         })
+        //         .catch(err => console.log(err));
+        // })
+        new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
+            // Match User
+            User.findOne({ email: email })
+                .then(user => {
                     if(!user) {
-                        return done(null, false, { message: "That email is not registered"});
+                        return done(null, false, { message: 'That email is not registered' });
                     }
-                    //Match Password
+                    // Match Password
                     bcrypt.compare(password, user.password, (err, isMatch) => {
                         if(err) throw err;
-                        if (isMatch) {
+                        if(isMatch) {
                             return done(null, user);
                         } else {
-                            return done(null, false, { message: "Passord Incorrect"});
+                            return done(null, false, { message: 'Password incorrect' });
                         }
-                    })
+                    });
                 })
-                .catch( err => console.log(err));
-
+                .catch(err => console.log(err));
         })
     );
 
@@ -32,9 +51,11 @@ module.exports = function (passport) {
         done(null, user.id);
     });
 
-    passport.deSerializeUser((id, done) =>{
-        userModel.findOne(id, (err, user) => {
+    passport.deserializeUser((id, done) => {
+        User.findById(id, (err, user) => {
             done(err, user);
         });
     });
-};
+
+
+}

@@ -6,14 +6,30 @@ const passport = require("passport");
 // User Model
 const User = require('../models/User');
 
-// Login Page
+// // Login Page
+// router.post('/login', (req, res, next) => {
+//     passport.authenticate("local", {
+//         successRedirect: "/dashboard", 
+//         failureRedirect: "/users/login",
+//         failureFlash: true
+//     })(req, res, next);
+// });
+
+// Login
 router.post('/login', (req, res, next) => {
-    passport.authenticate("local", {
-        successRedirect: "/dashboard", 
-        failureRedirect: "/users/login",
+    passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/users/login',
         failureFlash: true
     })(req, res, next);
 });
+
+
+// Register Page
+router.get('/login', (req, res, next) => {
+    res.render('login');
+});
+
 
 
 // Register Page
