@@ -3,6 +3,10 @@ const expressLayouts = require("express-ejs-layouts");
 const app = express();
 const mongoose = require("mongoose");
 
+const flash = require("connect-flash");
+const session = require("express-session");
+
+
 //DB Config
 const db = require("./config/keys").mongoURI;
 
@@ -17,7 +21,22 @@ app.set("view engine", "ejs"); // 매뉴얼에 이렇게 하도록 미리 세팅
 // Express body parser
 app.use(express.urlencoded({ extended:true }));
 
+// exress session
+app.use(session({
+    secret: "screat",
+    resave: true,
+    saveUninitialized: true
+}));
 
+// connect flash
+app.use(flash());
+
+// Global Vars
+app.use((req, res, next)=> {
+    res.locals.success_msg = req.flash("success_msg");
+    res.locals.error_msg = req.flash("error_msg");
+    next();
+});
 app.use("/", require("./routers/index"));
 app.use("/users", require("./routers/users"));
 
