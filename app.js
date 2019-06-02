@@ -1,12 +1,14 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
-const app = express();
 
 const mongoose = require("mongoose");
 
 const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
+
+const app = express();
+
 
 //Passport config
 require("./config/passport")(passport);
@@ -27,14 +29,14 @@ app.use(express.urlencoded({ extended:true }));
 
 // exress session
 app.use(session({
-    secret: "screat",
+    secret: "secret",
     resave: true,
     saveUninitialized: true
 }));
 
 // Passport middleware
 app.use(passport.initialize());
-app.use(passport,session());
+app.use(passport.session());
 
 
 
